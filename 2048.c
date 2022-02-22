@@ -20,16 +20,12 @@ int score=2048,last=0;
 
 void starting();
 void wait();
-void waitL();
-void vname();
 void Display();
 void print_ever();
 void Action(int);
 void Random_creator();
 void Starting_Random();
 int Temp_counter();
-void ending();
-void record();
 void Down();
 void Up();
 void Left();
@@ -51,8 +47,6 @@ void wait()
     int i;
     for(i=0;i<4500000;i++);
 }
-
-
 
 printer(char s[])
 {
@@ -77,7 +71,6 @@ void Action(int Arrow)
             }
         case DOWN:
             {
-                /* logic here */
                 Down();
                 break;
             }
@@ -98,11 +91,11 @@ void Action(int Arrow)
             }
     }
     score--;
-    Random_creater();
+    Random_creator();
     Display();
 }
 
-void Random_creater()
+void Random_creator()
 {
     int temp1,temp2,add,i,j;
     srand(time(NULL));
@@ -154,62 +147,9 @@ void Display()
 void print_ever()
 {
     printf("\n\n\n\t\t\t2048\n");
-    printf("\t\t\t\t\t\t\t\t SCORE  : %d\n\n\n\n",score);
+    printf("\t\t\t\t\t\t\t\t STEPS LEFT  : %d\n\n\n\n",score);
     printf("\t\t\t %c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n",BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER,BORDER);
 
-}
-
-void ending()
-{
-    /*here print prev high score and current score from file */
-    printf("\n\n\t\t\t\tYOUR SCORE is  : %d",score);
-    record();
-}
-void record(){
-   char plname[20],nplname[20],cha,c;
-   int i,j;
-   FILE *info;
-   info=fopen("record.txt","a+");
-   getch();
-   system("cls");
-   printf("Enter your name\n");
-   scanf("%[^\n]",plname);
-   //************************
-   for(j=0;plname[j]!='\0';j++){ //to convert the first letter after space to capital
-   nplname[0]=toupper(plname[0]);
-   if(plname[j-1]==' '){
-   nplname[j]=toupper(plname[j]);
-   nplname[j-1]=plname[j-1];}
-   else nplname[j]=plname[j];
-   }
-   nplname[j]='\0';
-   //*****************************
-   //sdfprintf(info,"\t\t\tPlayers List\n");
-   fprintf(info,"Player Name :%s\n",nplname);
-    //for date and time
-
-   time_t mytime;
-  mytime = time(NULL);
-  fprintf(info,"Played Date:%s",ctime(&mytime));
-     //**************************
-     fprintf(info,"Score:%d\n",score);//call score to display score
-     //fprintf(info,"\nLevel:%d\n",10);//call level to display level
-   for(i=0;i<=50;i++)
-   fprintf(info,"%c",'_');
-   fprintf(info,"\n");
-   fclose(info);
-   printf("wanna see past records press 'y'\n");
-   cha=getch();
-   system("cls");
-   if(cha=='y'){
-   info=fopen("record.txt","r");
-   do{
-       putchar(c=getc(info));
-       }while(c!=EOF);}
-     fclose(info);
-     printf("\n\n\n\t\t\t\tPRESS ANY KEY TO EXIT\n");
-     while(!kbhit());
-    system("attrib +h +s record.txt");
 }
 
 void Starting_Random()
@@ -226,7 +166,6 @@ void Starting_Random()
 
 int Temp_counter()
 {
-    /* IT SHOULD FIND MAX VALUE FROM WHOLE MATRIX  */
     int temp=0,i,j;
 
     for(i=0;i<SIZE;i++)
@@ -360,11 +299,6 @@ void Left()
     }
 }
 
-
-
-
-
-
 main()
 {
     int aro;
@@ -374,7 +308,7 @@ main()
     starting();
     Starting_Random();
     Arrow=DOWN;
-    while(Arrow!=ESC)  //  HERE IF USER WANT TO EXIT THEN PRESS ESC KEY
+    while(Arrow!=ESC)
     {
         Arrow=getch();
         aro=Arrow;
@@ -383,7 +317,6 @@ main()
         if(temp==1)
         {
             printf("\n\t\t\tYOU WON");
-            ending();
             break;
         }
         if(temp==0 || score<0)
@@ -392,7 +325,6 @@ main()
             break;
         }
     }
-
     system("cls");
     printf("\n\n\n\t");
     printer(s);
